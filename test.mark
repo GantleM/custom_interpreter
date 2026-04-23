@@ -1,0 +1,22 @@
+VAR test = "hello"
+VAR num1 = 1 + 8
+VAR num2 = 7
+
+IF test == "hello" THEN
+    print "inside if"
+    print "inside if"
+    
+    IF num1 >= num2 THEN
+        print "Second if statement"
+    END
+END
+
+print "Variable value below:"
+print test
+
+VAR it = 0
+
+DO 5
+    print it
+    VAR it = it + 1
+END
