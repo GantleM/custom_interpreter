@@ -1,9 +1,10 @@
 VAR test = "hello"
 VAR num1 = 1 + 8
 VAR num2 = 7
+LIST testing = ["Hello" "There" "world" test]
 
-IF test == "hello" THEN
-    print "inside if"
+
+IF testing[3] == "hello" THEN
     print "inside if"
     
     IF num1 >= num2 THEN
@@ -19,4 +20,20 @@ VAR it = 0
 DO 5
     print it
     VAR it = it + 1
+END
+
+VAR counter = 0
+VAR is_checking = True
+
+DO 4
+
+    IF is_checking THEN
+        IF testing[counter] == "world" THEN
+            VAR is_checking = False
+            print "Found word in list at position:"
+            print counter
+        END
+    END
+    
+    VAR counter = counter + 1
 END
