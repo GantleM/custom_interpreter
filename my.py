@@ -3,14 +3,14 @@ class My:
         self.code = code
         self.env = {}
         self.instructions = self.read_code(self.code)
-        self.reserved_words = ["IF", "THEN", "DO", "print", "END", "LIST", "ADD"]
+        self.reserved_words = ["IF", "THEN", "True", "False", "DO", "print", "END", "LIST", "ADD"]
         self.execute_code(self.instructions)
 
 
     def resolve(self, condition):
         # Boolean value 
         if len(condition) == 1:
-            return condition[0] == "True"
+            return self.data(condition[0])
         
         left, operation, right = condition
 
@@ -30,6 +30,9 @@ class My:
             return left <= right
         if operation == ">=":
             return left >= right
+        
+        if operation == "IN":
+            return left in right
         
         if operation == "+":
             return left + right
@@ -51,8 +54,6 @@ class My:
         
         elif "[" in source and source.endswith("]"):
 
-            
-
             index_start = source.index("[")
             index_end = source.index("]")
 
@@ -73,7 +74,8 @@ class My:
         
         elif source.startswith("\"") and source.endswith("\""):
             return source[1:-1]
-        
+        elif source in ["True", "False"]:
+            return source == "True"
         elif source.isdigit():
             return int(source)
         
@@ -247,9 +249,9 @@ class My:
                 if 1 < len(ins["value"]):
                     data = self.resolve(ins["value"])
                 else:
-                    data = ins["value"][0]
+                    data = self.data(ins["value"][0])
 
-                self.env[ins["name"]] = self.data(data)
+                self.env[ins["name"]] = data
 
             if ins["type"] == "list":
                 if ins["name"] in self.reserved_words:
@@ -270,9 +272,9 @@ class My:
                 if 1 < len(ins["data"]):
                     data = self.resolve(ins["data"])
                 else:
-                    data = ins["data"][0]
+                    data = self.data(ins["data"][0])
 
-                print(self.data(data))
+                print(data)
             
             if ins["type"] == "if":
                 if self.resolve(ins["condition"]):
